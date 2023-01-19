@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "nodes.h"
 #include "edges.h"
-#include "graph.h"
+#include "algo.h"
 
 void addEdge(int , int , int , pnode *);
 void insertLastE(pnode, int , pnode *);

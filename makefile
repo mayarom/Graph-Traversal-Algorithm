@@ -1,16 +1,16 @@
 CFLAGS = -g -Wall
-OBJ = graph.o nodes.o edges.o
+OBJ = algo.o nodes.o edges.o
 CC = gcc
 
 all: output functions
 
-graph.o: graph.c nodes.h graph.h edges.h
-	$(CC) -c $(CFLAGS) graph.c
+algo.o: algo.c nodes.h algo.h edges.h
+	$(CC) -c $(CFLAGS) algo.c
 
-nodes.o: nodes.c nodes.h graph.h edges.h
+nodes.o: nodes.c nodes.h algo.h edges.h
 	$(CC) -c $(CFLAGS) nodes.c
 
-edges.o: edges.c nodes.h graph.h edges.h
+edges.o: edges.c nodes.h algo.h edges.h
 	$(CC) -c $(CFLAGS) edges.c
 
 libfunctions.so: $(OBJ)
@@ -18,11 +18,11 @@ libfunctions.so: $(OBJ)
 
 functions: libfunctions.so
 
-main.o: main.c nodes.h graph.h edges.h
+main.o: main.c nodes.h algo.h edges.h
 	$(CC) -c $(CFLAGS) main.c
 
 output: main.o libfunctions.so
-	$(CC) $(CFLAGS) -o graph main.o ./libfunctions.so
+	$(CC) $(CFLAGS) -o algo main.o ./libfunctions.so
 
 .PHONY: all clean functions output
 
