@@ -10,15 +10,20 @@ void deleteFromListE(int, pedge *, pnode *);
 void freeEdges(pedge *);
 edge *newEdge(int , pnode);
 
+/**
+ * Creates a new edge with the given weight and destination.
+ * @param weight The weight of the edge.
+ * @param dest The destination of the edge.
+*/
 edge *newEdge(int weight, pnode dest)
 {
     edge *e = (edge *)malloc(sizeof(edge));
-    if (e == NULL)
+    if (e == NULL) // malloc failed
     {
         return NULL;
     }
-    e->weight = weight;
-    e->endpoint = dest;
+    e->weight = weight; // set the weight
+    e->endpoint = dest; // set the destination
     e->next = NULL;
     return e;
 }

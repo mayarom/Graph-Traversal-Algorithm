@@ -7,7 +7,7 @@
 node *newNode(int);
 void insertLastN(int, pnode *);
 void deleteFromListN(int, node **);
-pnode getNode (pnode *, int);
+pnode getNode(pnode *, int);
 void deleteGraph(pnode *);
 
 node *newNode(int id)
@@ -37,34 +37,55 @@ pnode getNode(pnode *head, int id)
     return NULL;
 }
 
+/**
+ * Inserts a new node with a specified ID at the end of the linked list of nodes.
+ * @param id The ID of the new node
+ * @param head The head pointer of the linked list of nodes
+ */
 void insertLastN(int id, pnode *head)
 {
-    pnode *p = head;
-    while (*p)
+    // Initialize the pointer to traverse the list
+    pnode *curr = head;
+
+    // Iterate through the list until the end
+    while (*curr)
     {
-        p = &((*p)->next);
+        curr = &((*curr)->next);
     }
-    *p = newNode(id);
+
+    // Allocate memory for the new node and insert it at the end of the list
+    *curr = newNode(id);
 }
 
+/**
+ * Removes a node with a specified ID from the linked list of nodes.
+ * @param id The ID of the node to remove
+ * @param head The head pointer of the linked list of nodes
+ */
 void deleteFromListN(int id, pnode *head)
 {
-    pnode h = *head;
-    pnode p = NULL;
-    if(h->id != id){
-        while (h->next->id != id)
+    pnode curr = *head;
+    pnode prev = NULL;
+
+    // Iterate through the list of nodes to find the node with the specified ID
+    for ( curr = *head; curr; prev = curr, curr = curr->next)
+    {
+        if (curr->id == id)
         {
-            h = h->next;
+            if (prev)
+            {
+                prev->next = curr->next;
+            }
+            else
+            {
+                *head = curr->next;
+            }
+            // Remove the node's edges
+            freeEdges(&(curr->edges));
+            // Free the memory used by the node
+            free(curr);
+            return;
         }
-        p = h->next;
-        h->next = h->next->next;
-        freeEdges(&(p->edges));
-        free(p);
     }
-    else{
-        p = *head;
-        *head = p->next;
-        freeEdges(&(p->edges));
-        free(p);
-    }
+    printf("Error: Node with ID %d not found in the list.\n", id);
 }
